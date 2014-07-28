@@ -36,6 +36,7 @@ def webcrawler(startingurl):
 
     for a in soup.find_all('a', "title may-blank ", href=True): #find every post link on the page via the 'title may-blank ' class
         newsite = str(site)
+        if not 'comment' in a['href']: continue
         if not newsite in a['href']: continue  #prevents non-selfposts from getting in the link list. MAYBE MAKE INTO PROMPT
         found_url = BASE_URL + a['href']
 
@@ -56,7 +57,7 @@ def webcrawler(startingurl):
         webcrawler(next_url)  #recursion
 
 
-site = raw_input("Enter subreddit you want to analyze: ")
+site = raw_input("Enter subreddit you want to analyze (case matters!): ")
 webcrawler("http://www.reddit.com/r/" + str(site))  #run with starting link. need to make into PROMPT
 #"http://www.reddit.com/r/intj"
 
